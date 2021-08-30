@@ -20,11 +20,11 @@ public class YankiServiceImpl implements IYankiService {
     @Autowired
     private YankiRepository yankiRepository;
 
-    private ReactiveValueOperations<String, YankiDocument> yankiOps;
-
-    public YankiServiceImpl(ReactiveValueOperations<String, YankiDocument> yankiOps) {
-        this.yankiOps = yankiOps;
-    }
+//    private ReactiveValueOperations<String, YankiDocument> yankiOps;
+//
+//    public YankiServiceImpl(ReactiveValueOperations<String, YankiDocument> yankiOps) {
+//        this.yankiOps = yankiOps;
+//    }
 
     @Override
     public Mono<YankiDocument> validateFields(YankiDocument accountYankie) {

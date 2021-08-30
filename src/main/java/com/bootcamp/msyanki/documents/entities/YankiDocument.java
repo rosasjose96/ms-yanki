@@ -55,6 +55,8 @@ public class YankiDocument implements Serializable {
     @Field(name = "imeiPhone")
     private String imeiPhone;
 
+    private double amountYanki;
+
     private Date createYanki;
 
     @Indexed(unique = true)

@@ -26,23 +26,23 @@ public class RedisConfig {
 //        return new ReactiveRedisTemplate<>(factory, context);
 //    }
 
-    @Bean
-    public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
-        return new LettuceConnectionFactory("localhost", 6379);
-    }
-
-    @Bean
-    public ReactiveRedisTemplate<String, YankiDocument> reactiveRedisTemplate(
-            ReactiveRedisConnectionFactory factory) {
-        StringRedisSerializer keySerializer = new StringRedisSerializer();
-        Jackson2JsonRedisSerializer<YankiDocument> valueSerializer =
-                new Jackson2JsonRedisSerializer<>(YankiDocument.class);
-        RedisSerializationContext.RedisSerializationContextBuilder<String, YankiDocument> builder =
-                RedisSerializationContext.newSerializationContext(keySerializer);
-        RedisSerializationContext<String, YankiDocument> context =
-                builder.value(valueSerializer).build();
-        return new ReactiveRedisTemplate<>(factory, context);
-    }
+//    @Bean
+//    public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
+//        return new LettuceConnectionFactory("localhost", 6379);
+//    }
+//
+//    @Bean
+//    public ReactiveRedisTemplate<String, YankiDocument> reactiveRedisTemplate(
+//            ReactiveRedisConnectionFactory factory) {
+//        StringRedisSerializer keySerializer = new StringRedisSerializer();
+//        Jackson2JsonRedisSerializer<YankiDocument> valueSerializer =
+//                new Jackson2JsonRedisSerializer<>(YankiDocument.class);
+//        RedisSerializationContext.RedisSerializationContextBuilder<String, YankiDocument> builder =
+//                RedisSerializationContext.newSerializationContext(keySerializer);
+//        RedisSerializationContext<String, YankiDocument> context =
+//                builder.value(valueSerializer).build();
+//        return new ReactiveRedisTemplate<>(factory, context);
+//    }
 
 
 }
