@@ -118,4 +118,9 @@ public class YankiHandler {
                 .flatMap(c -> yankiService.delete(c).then(ServerResponse.noContent().build()))
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
+
+    public Mono<ServerResponse> associateYankidebit(ServerRequest request){
+        Mono<YankiDocument> walletRequest = request.bodyToMono(YankiDocument.class);
+        return Mono.empty();
+    }
 }
