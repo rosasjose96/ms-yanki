@@ -1,7 +1,9 @@
 package com.bootcamp.msyanki.handler;
 
+import com.bootcamp.msyanki.documents.dto.Debitcard;
 import com.bootcamp.msyanki.documents.entities.YankiDocument;
 import com.bootcamp.msyanki.services.IYankiService;
+import com.bootcamp.msyanki.topic.producer.Producer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class YankiHandler {
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(yankiService.findAll(), YankiDocument.class);
     }
+
+    @Autowired
+    private Producer producer;
 
     public Mono<ServerResponse> newCurrentYanki(ServerRequest request){
 
@@ -95,7 +100,7 @@ public class YankiHandler {
         String id = request.pathVariable("id");
 
         return yankiService.findById(id).zipWith(accountMono, (db,req) -> {
-                    db.setEmail(req.getEmail());
+                    db.setAmountYanki(req.getAmountYanki());
                     db.setNroPhone(req.getNroPhone());
                     db.setImeiPhone((req.getImeiPhone()));
                     return db;
@@ -120,7 +125,14 @@ public class YankiHandler {
     }
 
     public Mono<ServerResponse> associateYankidebit(ServerRequest request){
-        Mono<YankiDocument> walletRequest = request.bodyToMono(YankiDocument.class);
-        return Mono.empty();
+        Mono<Debitcard> yankiDocumentMono = request.bodyToMono(Debitcard.class);
+        return yankiDocumentMono
+                .flatMap(associate -> {
+                    producer.sendSaveCustomerService(associate);
+                    return Mono.just(associate);
+                }).flatMap(response -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(response))
+                .onErrorResume(error -> Mono.error(new RuntimeException(error.getMessage())));
     }
 }

@@ -22,6 +22,6 @@ public class RouterConfig {
                 .andRoute(POST("/api/currentYanki"), yankiHandler::newCurrentYanki)
                 .andRoute(PUT("/api/currentYanki/{id}"), yankiHandler::updateYankiAccount)
                 .andRoute(DELETE("/api/currentYanki/{id}"), yankiHandler::deleteYankiAccount)
-                .andRoute(DELETE("/api/currentYanki/associate"), yankiHandler::associateYankidebit);
+                .andRoute(GET("/api/currentYanki/associate"), yankiHandler::associateYankidebit);
     }
 }

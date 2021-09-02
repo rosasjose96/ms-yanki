@@ -58,7 +58,6 @@ public class YankiDocument implements Serializable {
 
     private Date createYanki;
 
-    @Indexed(unique = true)
     private String debitCard;
 
 
